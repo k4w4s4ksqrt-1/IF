@@ -1,50 +1,50 @@
 
 
-const int trigPin = 11;           //connects to the echo pin on the distance sensor       
-const int echoPin = 12;           //connects to the trigger pin on the distance sensor     
-
-const int redPin = 3;             //pin to control the red LED inside the RGB LED
-const int greenPin = 5;           //pin to control the green LED inside the RGB LED
-const int bluePin = 6;            //pin to control the blue LED inside the RGB LED
-
-float distance = 0;               //stores the distance measured by the distance sensor
+ int trigPin = 4;                
+ int echoPin = 5;              
+ int led1 = 1;             
+ int led2 = 2;          
+ int led3 = 3;           
+float distance = 0;              
 
 void setup()
 {
-  Serial.begin (9600);        //set up a serial connection with the computer
+  Serial.begin (9600);        
 
-  pinMode(trigPin, OUTPUT);   //the trigger pin will output pulses of electricity 
-  pinMode(echoPin, INPUT);    //the echo pin will measure the duration of pulses coming back from the distance sensor
-
-  //set the RGB LED pins to output
-  pinMode(redPin, OUTPUT);
-  pinMode(greenPin, OUTPUT);
-  pinMode(bluePin, OUTPUT);
+  pinMode(trigPin, OUTPUT);   
+  pinMode(echoPin, INPUT);    
+  pinMode(led1, OUTPUT);
+  pinMode(led2, OUTPUT);
+  pinMode(led3, OUTPUT);
 }
 
 void loop() {
   distance = getDistance();  
 
   Serial.print(distance);    
-  Serial.println(" in");     
 
   if(distance <= 10){                        
     
-    analogWrite(redPin, 255);
-    analogWrite(greenPin, 0);
-    analogWrite(bluePin, 0);
-    
-  } else if(10 < distance && distance < 20){ 
+    analogWrite(led1, 255);
+    analogWrite(led2, 0);
+    analogWrite(led3, 0);
+    }
 
-    analogWrite(redPin, 255);
-    analogWrite(greenPin, 50);
-    analogWrite(bluePin, 0);
+if(distance <= 20){       
+    analogWrite(led1, 0);
+    analogWrite(led2, 255);
+    analogWrite(led3, 0);
+    delay(50)
+    analogWrite(led1, 0);
+    analogWrite(led2, 255);
+    analogWrite(led3, 0);
+    delay(50)
     
-  } else{                                    
+  } if{                                    
     
-    analogWrite(redPin, 0);
-    analogWrite(greenPin, 255);
-    analogWrite(bluePin, 0);    
+    analogWrite(led1, 0);
+    analogWrite(led2, 255);
+    analogWrite(led3, 0);    
   }
 
   delay(50);      
