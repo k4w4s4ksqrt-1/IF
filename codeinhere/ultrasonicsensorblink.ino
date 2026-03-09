@@ -1,67 +1,56 @@
+int trigPin = 4;
+int echoPin = 5;
+int led1 = 2; 
+int led2 = 3; 
+int led3 = 6; 
 
+float distance = 0;
 
- int trigPin = 4;                
- int echoPin = 5;              
- int led1 = 1;             
- int led2 = 2;          
- int led3 = 3;           
-float distance = 0;              
-
-void setup()
-{
-  Serial.begin (9600);        
-
-  pinMode(trigPin, OUTPUT);   
-  pinMode(echoPin, INPUT);    
+void setup() {
+  Serial.begin(9600);
+  pinMode(trigPin, OUTPUT);
+  pinMode(echoPin, INPUT);
   pinMode(led1, OUTPUT);
   pinMode(led2, OUTPUT);
   pinMode(led3, OUTPUT);
 }
 
 void loop() {
-  distance = getDistance();  
+  distance = getDistance();
+  Serial.println(distance);
 
-  Serial.print(distance);    
-
-  if(distance <= 10){                        
-    
-    analogWrite(led1, 255);
-    analogWrite(led2, 0);
-    analogWrite(led3, 0);
-    }
-
-if(distance <= 20){       
-    analogWrite(led1, 0);
-    analogWrite(led2, 255);
-    analogWrite(led3, 0);
-    delay(50)
-    analogWrite(led1, 0);
-    analogWrite(led2, 255);
-    analogWrite(led3, 0);
-    delay(50)
-    
-  } if{                                    
-    
-    analogWrite(led1, 0);
-    analogWrite(led2, 255);
-    analogWrite(led3, 0);    
+  if(distance > 20){ 
+    digitalWrite(led1, HIGH);
+    digitalWrite(led2, LOW);
+    digitalWrite(led3, LOW);
+    delay(50); 
   }
-
-  delay(50);      
+  else if(distance > 10){ 
+    digitalWrite(led1, LOW);
+    digitalWrite(led3, LOW);
+    digitalWrite(led2, HIGH);
+    delay(500); 
+    digitalWrite(led2, LOW);
+    delay(500); 
+  }
+  else{ 
+    digitalWrite(led1, LOW);
+    digitalWrite(led2, LOW);
+    digitalWrite(led3, HIGH);
+    delay(100); 
+    digitalWrite(led3, LOW);
+    delay(100); 
+  }
 }
-float getDistance()
-{
-  float echoTime;                   
-  float calcualtedDistance;        
-  
+
+float getDistance() {
+  digitalWrite(trigPin, LOW);
+  delayMicroseconds(2);
   digitalWrite(trigPin, HIGH);
-  delayMicroseconds(10); 
+  delayMicroseconds(10);
   digitalWrite(trigPin, LOW);
 
-  echoTime = pulseIn(echoPin, HIGH);      
-                                        
-
-  calcualtedDistance = echoTime / 148.0;  
-  return calcualtedDistance;             
+  float echoTime = pulseIn(echoPin, HIGH);
+  float calculatedDistance = echoTime / 148.0; 
+  return calculatedDistance;
 }
-
